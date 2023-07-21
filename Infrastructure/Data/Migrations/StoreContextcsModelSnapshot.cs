@@ -29,6 +29,9 @@ namespace Infrastructure.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("PictureUrl")
+                        .HasColumnType("TEXT");
+
                     b.Property<decimal?>("Price")
                         .HasColumnType("TEXT");
 
@@ -37,9 +40,6 @@ namespace Infrastructure.Data.Migrations
 
                     b.Property<int>("ProductTypeId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("pictreUrl")
-                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

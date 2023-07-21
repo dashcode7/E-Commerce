@@ -18,14 +18,30 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Product>>> GetProducts()
         {
-            var result = await _context.Products.ToListAsync();
+            var result = await _context.Products
+                .Include(p => p.ProductBrand)
+                .Include(p => p.ProductType)
+                .ToListAsync();
             return result;
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetName(int id)
         {
-            return await _context.Products.FindAsync(id);
+            return Ok(await _context.Products
+                .Include(p => p.ProductBrand)
+                .Include(p => p.ProductType)
+                .FirstOrDefaultAsync(p => p.Id == id));
+        }
+        [HttpGet("brand")]
+        public async Task<ActionResult<List<ProductBrand>>> GetProductBrand()
+        {
+            return Ok(await _context.ProductBrand.ToListAsync());
+        }
+        [HttpGet("type")]
+        public async Task<ActionResult<List<ProductType>>> GetProductType()
+        {
+            return Ok(await _context.ProductType.ToListAsync());
         }
     }
 }
