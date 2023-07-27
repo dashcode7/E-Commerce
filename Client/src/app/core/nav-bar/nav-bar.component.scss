@@ -10,3 +10,12 @@
     bottom: 18px;
     left: 18px;
 }
+a{
+   color: rgba(var(--bs-dark-rgb));
+   text-decoration: none;
+   cursor: pointer;
+
+   &.active{
+    color: orange;
+   }
+}

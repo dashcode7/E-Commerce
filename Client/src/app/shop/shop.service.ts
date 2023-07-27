@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PaginatedProducts } from '../shared/models/Product.model';
+import { PaginatedProducts, Product } from '../shared/models/Product.model';
 import { Observable } from 'rxjs';
 import { Brand } from '../shared/models/brand.model';
 import { Type } from '../shared/models/type.model';
@@ -28,5 +28,8 @@ export class ShopService {
   }
   getTypes():Observable<Type[]>{
     return this.http.get<Type[]>(this.apiURL+'Products/type')
+  }
+  getProductById(id:number){
+    return this.http.get<Product>(this.apiURL+'Products/'+id);
   }
 }

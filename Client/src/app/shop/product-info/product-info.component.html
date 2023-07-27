@@ -1,0 +1,19 @@
+<div class="row" *ngIf="product">
+  <div class="col-6">
+    <img [src]="'/assets/'+product.pictureUrl" class="w-100" alt="{{product.name}}">
+  </div>
+  <div class="col-6 mt-5">
+    <h3>{{product.name}}</h3>
+    <span>{{product.price | currency:'INR'}}</span>
+    <div class="d-flex align-items-center mt-1">
+      <i class="fa fa-minus-circle text-warning me-3" style="cursor: pointer;font-size: 2em;"></i>
+      <span style="font-weight: bold;">2</span>
+      <i class="fa fa-plus-circle text-warning ms-3" style="cursor: pointer;font-size: 2em;"></i>
+      <button class="btn btn-outline-secondary ms-4">Add to cart</button>
+    </div>
+    <div class="row mt-4">
+      <h5 class="">Description</h5>
+      <p>{{product.description}}</p>
+    </div>
+  </div>
+</div>

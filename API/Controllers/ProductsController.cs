@@ -73,22 +73,18 @@ namespace API.Controllers
                     .ToList();
                 list.pageSize = pageSize;
                 list.pageNumber = page;
-                list.totalCount = result.Count;
                 list.data = result;
                 //return result;
             }
             else
             {
-                var b = products[0].Name.ToLower().Contains("angular");
                 var result = products
                     .Where(p => p.Name.ToLower().Contains(searchstring.ToLower()) || p.ProductType.Name.ToLower().Contains(searchstring.ToLower()) || p.ProductBrand.Name.ToLower().Contains(searchstring.ToLower()))
-                    .Skip((page - 1) * pageSize)
-                    .Take(pageSize)
                     .ToList();
                 list.pageSize = pageSize;
                 list.pageNumber = page;
-                list.totalCount = result.Count;
                 list.data= result;
+                list.totalCount = result.Count;
                // return result;
             }
             return  list;
@@ -126,10 +122,10 @@ namespace API.Controllers
                                     .Include(p => p.ProductType)
                                     .ToListAsync();
                     var orderedlist = GetProductsWithPaginations(resp.ToList<Product>(), page, searchstring, pageSize);
-                    var list = orderItems(orderedlist.data, sort);
+                    var list = orderItems(orderedlist.data, sort).Skip((page - 1) * pageSize).Take(pageSize);
                     listAll.data = list.ToList<Product>();
                     listAll.pageSize = 6;
-                    listAll.totalCount = list.Count();
+                    listAll.totalCount = orderedlist.totalCount;
                     listAll.pageNumber = page;
 
                     return Ok(listAll);
@@ -142,6 +138,7 @@ namespace API.Controllers
                .Include(p => p.ProductType)
                .Where(p => p.ProductBrandId == brandId && p.ProductTypeId == typeId)
                .ToListAsync();
+                var count = res.Count;
                  var paginatedres =  GetProductsWithPaginations(res.ToList<Product>(),page, searchstring, pageSize);
                 var list =orderItems(paginatedres.data, sort);
                 paginatedres.data = list.ToList<Product>();
@@ -149,7 +146,7 @@ namespace API.Controllers
 
                 paginatedres.pageSize = 6;
                 paginatedres.pageNumber = page;
-                paginatedres.totalCount = totalCount;
+                paginatedres.totalCount = count;
                 return Ok(paginatedres);
             }
             var result = await _context.Products
@@ -157,14 +154,14 @@ namespace API.Controllers
                 .Include(p => p.ProductType)
                 .Where(p => p.ProductBrandId == brandId || p.ProductTypeId == typeId)
                 .ToListAsync();
-
+            var itemcount = result.Count;
             var paginatedresult = GetProductsWithPaginations(result.ToList<Product>(),page, searchstring, pageSize);
             var ordList = orderItems(paginatedresult.data, sort);
 
             paginatedresult.data = ordList.ToList<Product>();
             paginatedresult.pageSize = 6;
             paginatedresult.pageNumber = page;
-            paginatedresult.totalCount = ordList.Count();
+            paginatedresult.totalCount = itemcount;
             return Ok(paginatedresult);
         }
 

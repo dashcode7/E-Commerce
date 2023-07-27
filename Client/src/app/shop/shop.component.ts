@@ -39,6 +39,7 @@ searchString='';
     this.shopService.getProducts(this.brandIdSelected,this.typeIdSelected,this.sortOptSelected,this.paginatedList.pageNumber,this.paginatedList.pageSize,this.searchString).subscribe({
       next: res =>{
         this.Products = res.data;
+        this.paginatedList.pageNumber = res.pageNumber;
         this.paginatedList.totalCount = res.totalCount;
         this.paginatedList.pageSize = res.pageSize
       
@@ -65,10 +66,12 @@ searchString='';
   }
   brandSelected(id:number){
     this.brandIdSelected = id;
+    this.paginatedList.pageNumber=1;
     this.getProducts();
   }
   typeSelected(id:number){
   this.typeIdSelected =id;
+  this.paginatedList.pageNumber=1;
   this.getProducts();
 
   }

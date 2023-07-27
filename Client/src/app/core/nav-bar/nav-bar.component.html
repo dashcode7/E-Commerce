@@ -1,18 +1,22 @@
 <nav class="navbar navbar-expand-sm d-flex align-items-center bg-white justify-content-between border-bottom shadow-sm p-3 fixed-top gap-4">
-    <a class="navbar-brand">E-Commerce</a>
+    <a class="navbar-brand" routerLink="/">E-Commerce</a>
     <button class="navbar-toggler" data-bs-target="#navitem" aria-controls="navitem" data-bs-toggle="collapse">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-center" id="navitem">
         <div class="navbar-nav ">
             <div class="navbar-item me-3">
-                <a class="navbar-link text-dark text-decoration-none">Home</a>
+                <a class="navbar-link " 
+                routerLinkActive="active" 
+                routerLink="/"
+                [routerLinkActiveOptions]="{exact:true}"
+                >Home</a>
             </div>
             <div class="navbar-item me-3">
-                <a class="navbar-link text-dark text-decoration-none">Shop</a>
+                <a class="navbar-link " routerLinkActive="active" routerLink="/shop">Shop</a>
             </div>
             <div class="navbar-item me-3">
-                <a class="navbar-link text-dark text-decoration-none">Contact</a>
+                <a class="navbar-link " routerLinkActive="active" routerLink="/contact">Contact</a>
             </div>
 
         </div>
