@@ -1,0 +1,41 @@
+.btn{
+    width: 30%;
+    height: 40px;
+}
+
+.image :hover{
+    opacity: 1;
+    
+    & button{
+        transform: none;
+        opacity: 1;
+    }
+    & button:first-of-type{
+        transform: translateX(0px);
+    }
+    & button:last-of-type{
+        transform: translateX(0px);
+    }
+}
+
+.hover-overlay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(255,255,255,0.5);
+    transition: all .3s;
+    opacity: 0;
+    & button{
+        opacity: 0;
+        z-index: 1000;
+        transition: all .3s;
+    }
+    & button:first-of-type{
+        transform: translateX(-50px);
+    }
+    & button:last-of-type{
+        transform: translateX(50px);
+    }
+}

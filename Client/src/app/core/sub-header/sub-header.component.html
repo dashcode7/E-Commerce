@@ -1,0 +1,17 @@
+<ng-container *ngIf="$any(breadcrumbservice.breadcrumbs$| async)"></ng-container>
+<section class="py-4" *ngIf="lastItem != 'HOME'" style="margin-top:80px;background-color: #f5f5f5;">
+    <div class="container">
+        <div class="row d-flex align-items-center">
+            <div class="col-6 ">
+                <h3>{{lastItem | titlecase}}</h3>
+            </div>
+            <div class="col-6 ">
+                <xng-breadcrumb separator=">">
+                    <ng-container  *xngBreadcrumbItem="let breadcrumb">
+                        {{breadcrumb | titlecase}}
+                    </ng-container>
+                </xng-breadcrumb>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,12 +1,12 @@
 <div class="container">
-    <div class="row">
+    <div class="row" *ngIf="Brands.length > 0 && Types.length > 0">
         <div class="col-3">
             <h3>Sort</h3>
             <select class="form-select mb-4" (change)="onSortItems($event)">
                 <option *ngFor="let sort of sortOptions" [value]="sort.value">{{sort.name}}</option>
             </select>
             <h3>Brand</h3>
-            <ul class="list-group">
+            <ul class="list-group mb-4">
                 <li class="list-group-item"
                  *ngFor="let brand of Brands"
                  [class.active]="brand.id === brandIdSelected"
