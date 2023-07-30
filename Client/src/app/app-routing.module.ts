@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 const routes: Routes = [
   {path:'',component:HomeComponent,data:{breadcrumb:'Home'}},
   {path:'shop',loadChildren:()=>import ('./shop/shop.module').then(m=>m.ShopModule)},
+  {path:'basket',loadChildren:()=>import ('./basket/basket.module').then(m=>m.BasketModule)},
   {path:'**',component:HomeComponent,pathMatch:'full'}
 
 ];

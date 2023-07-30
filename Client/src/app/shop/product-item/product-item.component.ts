@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { BasketService } from 'src/app/basket/basket.service';
 import { Product } from 'src/app/shared/models/Product.model';
 
 @Component({
@@ -9,4 +10,9 @@ import { Product } from 'src/app/shared/models/Product.model';
 export class ProductItemComponent {
   @Input() product!:Product
 
+  constructor(private basketService:BasketService){}
+
+  addItemtoBasket(){
+    this.basketService.UpdateBasket(this.product);
+  }
 }

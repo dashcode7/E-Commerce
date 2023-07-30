@@ -15,7 +15,7 @@ namespace API.Controllers
         {
             _connection = connection.GetDatabase();
         }
-        [HttpGet]
+        [HttpGet("GetBucket")]
 
         public async Task<ActionResult<CustomerBucket>> getBucketList(string id)
         {
@@ -23,7 +23,7 @@ namespace API.Controllers
             return Ok(result.IsNullOrEmpty ? new CustomerBucket(id) : JsonSerializer.Deserialize<CustomerBucket>(result));
 
         }
-        [HttpPost]
+        [HttpPost("UpdateBucket")]
 
         public async Task<ActionResult<CustomerBucket>> updateBucket(CustomerBucket bucket)
         {
@@ -32,7 +32,7 @@ namespace API.Controllers
             return Ok(null);
         }
 
-        [HttpPost]
+        [HttpDelete("DeleteBucket")]
         public async Task<bool> DeleteBucket(string id)
         {
             return await _connection.KeyDeleteAsync(id);
