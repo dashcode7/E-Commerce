@@ -1,0 +1,24 @@
+
+
+
+        <div class="bg-light d-flex align-items-center py-3 px-4">
+            <strong>Order Summary</strong>
+        </div>
+        <div class="p-4">
+        <p class="fst-italic mb-4">Shipping cost will be calculated based on choices made during checkout</p>
+        <ul class="list-unstyled">
+            <li class="d-flex align-items-center justify-content-between py-3 border-bottom">
+                <span class="text-muted fw-bold">Order Subtotal</span>
+                <strong>{{basketTotal?.subTotal | currency:'INR'}}</strong>
+            </li>
+            <li class="d-flex align-items-center justify-content-between py-3 border-bottom">
+                <span class="text-muted fw-bold">Shaippng & handling</span>
+                <strong>{{basketTotal?.shipping | currency:'INR'}}</strong>
+            </li>
+            <li class="d-flex align-items-center justify-content-between py-3 border-bottom">
+                <span class="text-muted fw-bold">Total</span>
+                <strong>{{basketTotal?.total | currency:'INR'}}</strong>
+            </li>
+        </ul>
+    </div>
+

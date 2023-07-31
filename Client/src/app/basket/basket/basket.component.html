@@ -1,1 +1,63 @@
-<p>basket works!</p>
+<div class="container">
+    <div *ngIf="basket == null" class="d-flex align-items-center justify-content-center">
+        <p class="text-muted">There are no items in basket.</p>
+    </div>
+    <div class="container">
+        <div class="row">
+       <ng-container *ngIf="basket">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="align-middle bg-info">
+                    <tr>
+                        <th><div class="py-2 align-middle">Product</div></th>
+                        <th><div class="py-2 align-middle">Price</div></th>
+                        <th><div class="py-2 align-middle">Quantity</div></th>
+                        <th><div class="py-2 align-middle">Total</div></th>
+                        <th><div class="py-2 align-middle">Remove</div></th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of basket.items">
+                        <td>
+                            <div class="py-2 d-inline-block">
+                                <img src="/assets/{{item.pictureurl}} "
+                                alt="{{item.name}}"
+                                class="img-fluid"
+                                style="max-height: 50px;">
+                                <div class="d-inline-block align-middle py-2 ms-2">
+                                    <p class="text-dark mb-0"> <strong>{{item.name}}</strong></p>
+                                    <span class="text-muted">Type : {{item.typeName}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="align-middle py-2"><strong  style="color: black;"> {{item.price | currency:'INR'}}</strong></td>
+                        <td class="align-middle py-2">
+                            <div class="d-flex align-items-center">
+                            <i class="fa fa-minus-circle me-2 text-warning" (click)="RemoveItemFromBasket(item.id,1)" style="font-size:2em;cursor: pointer;"></i>
+                            <strong>{{item.quantity}}</strong>
+                            <i class="fa fa-plus-circle ms-2 text-warning" (click)="addItemToBasket(item)" style="font-size:2em;cursor: pointer;"></i>
+                        </div>
+
+                        </td>
+                        <td class="align-middle py-2"><strong>{{(item.quantity * item.price) | currency:'INR'}}</strong></td>
+                        <td class="align-middle py-2">
+                            <i (click)="RemoveItemFromBasket(item.id,item.quantity)" class="fa fa-trash text-danger" style="font-size: 2em;cursor: pointer;"></i>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+       </ng-container>
+    </div>
+    <div class="row" *ngIf="basket">
+        <div class="col-6 offset-6">
+            <app-order-total></app-order-total>
+            <div class="d-grid">
+                <a class="btn btn-outline-primary py-2">Proceed to checkout</a>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
