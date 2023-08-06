@@ -8,7 +8,7 @@ import { Product } from '../shared/models/Product.model';
   providedIn: 'root'
 })
 export class BasketService {
-  apiURL:string="http://localhost:5190/api/";
+  private apiURL:string="http://localhost:5190/api/";
   private basket= new  BehaviorSubject<Basket | null>(null);
   private basketTotal = new BehaviorSubject<BasketCost | null>(null);
   basket$ = this.basket.asObservable();

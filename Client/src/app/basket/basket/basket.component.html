@@ -26,7 +26,7 @@
                                 class="img-fluid"
                                 style="max-height: 50px;">
                                 <div class="d-inline-block align-middle py-2 ms-2">
-                                    <p class="text-dark mb-0"> <strong>{{item.name}}</strong></p>
+                                    <p routerLink="/shop/{{item.id}}" class="text-dark mb-0" style="cursor: pointer;"> <strong>{{item.name}}</strong></p>
                                     <span class="text-muted">Type : {{item.typeName}}</span>
                                 </div>
                             </div>
@@ -55,7 +55,7 @@
         <div class="col-6 offset-6">
             <app-order-total></app-order-total>
             <div class="d-grid">
-                <a class="btn btn-outline-primary py-2">Proceed to checkout</a>
+                <a routerLink="/checkout" class="btn btn-outline-primary py-2">Proceed to checkout</a>
             </div>
         </div>
     </div>
