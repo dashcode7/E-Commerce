@@ -5,7 +5,7 @@ namespace Infrastructure.Data
 {
     public class StoreContextcs : DbContext
     {
-        public StoreContextcs(DbContextOptions options) : base(options)
+        public StoreContextcs(DbContextOptions<StoreContextcs> options) : base(options)
         {
         }
         public DbSet<Product> Products { get; set; }
