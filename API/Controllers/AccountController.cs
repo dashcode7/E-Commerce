@@ -4,6 +4,10 @@ using Core.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using API.ErrorResponse;
+using Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -13,11 +17,49 @@ namespace API.Controllers
     {
         private readonly UserManager<AppUser> userManager;
         private readonly SignInManager<AppUser> signInManager;
+        private readonly TokenService token;
 
-        public AccountController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager)
+        public AccountController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager,TokenService token)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.token = token;
+        }
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<UserModel>> getCurrentUser()
+        {
+            var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+            var user =await userManager.FindByEmailAsync(email);
+            return new UserModel
+            {
+                Email = user.Email,
+                Token = token.CreateToken(user),
+                DisplayName = user.DisplayName
+            };
+        }
+        [HttpGet("checkIfEmailExists")]
+        public async Task<ActionResult<bool>> checkIfEmailExists(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            return user != null;
+        }
+        [Authorize]
+        [HttpGet("Address")]
+        public async Task<ActionResult<UserAddress>> getCutomerAddress()
+        {
+            var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+            var user = await userManager.Users.Include(x => x.Address).FirstOrDefaultAsync(y => y.Email == email);
+
+            return new UserAddress
+            {
+                FirstName = user.Address.FirstName,
+                City = user.Address.City,
+                LastName = user.Address.LastName,
+                Street = user.Address.Street,
+                PinCode = user.Address.PinCode,
+            };
+
         }
 
         [HttpPost("login")]
@@ -31,7 +73,7 @@ namespace API.Controllers
             return new UserModel
             {
                 Email = user.Email,
-                Token = "This can be used as a token",
+                Token =token.CreateToken(user),
                 DisplayName = user.DisplayName
             };
         }
@@ -53,7 +95,7 @@ namespace API.Controllers
             {
                 DisplayName = registermodel.DisplayName,
                 Email = registermodel.Email,
-                Token = "This can be user as a token"
+                Token = token.CreateToken(appUser)
             };
 
 
