@@ -26,8 +26,8 @@
             <span class="fa fa-shopping-cart fa-2x text-dark"></span>
             <div *ngIf="(basket | async) as baskets" class="cart-no">{{getCount(baskets.items)}}</div>
         </a>
-        <button class="btn btn-outline-secondary me-3">Login</button>
-        <button class="btn btn-outline-secondary m3-3">SignUp</button>
+        <button routerLink="/account/login" class="btn btn-outline-secondary me-3">Login</button>
+        <button routerLink="/account/register" class="btn btn-outline-secondary m3-3">SignUp</button>
 
     </div>
 </nav>

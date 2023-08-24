@@ -1,0 +1,21 @@
+<div class="d-flex justify-content-center mt-4">
+    <div class="col-3">
+        <div class="text-center mb-3">
+            <h3>Login</h3>
+        </div>
+        <form [formGroup]="loginForm">
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" formControlName="email" id="floatingInput" placeholder="Email">
+                <label for="floatingInput">Email address</label>
+              </div>
+              <div class="form-floating">
+                <input type="password" class="form-control" formControlName="password" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+              </div>
+              
+        </form>
+        <div class="d-grid mt-4">
+            <button class="btn btn-lg btn-primary" (click)="signIn()">Sign In</button>
+        </div>
+    </div>
+</div>

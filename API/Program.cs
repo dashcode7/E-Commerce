@@ -2,10 +2,14 @@ using Core.Entities.Identity;
 using Infrastructure.Data;
 using Infrastructure.Identity;
 using Infrastructure.IdentitySeeder;
+using Infrastructure.Services;
 using Infrastructure.StoreContextSeeder;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,8 +33,20 @@ builder.Services.AddIdentityCore<AppUser>(opt =>
 })
     .AddEntityFrameworkStores<AppIdentityDbContext>()
     .AddSignInManager<SignInManager<AppUser>>();
+builder.Services.AddSingleton<TokenService>();
 
-builder.Services.AddAuthentication();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("Token:Key"))),
+                        ValidIssuer = builder.Configuration.GetValue<string>("Token:Issuer"),
+                        ValidateIssuer = true,
+                        ValidateAudience = false
+                    };
+                });
 builder.Services.AddAuthorization();
 builder.Services.AddSingleton<IConnectionMultiplexer>( c =>
 {
