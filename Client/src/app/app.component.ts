@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BasketService } from './basket/basket.service';
+import { AccountService } from './account/account.service';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +12,19 @@ export class AppComponent implements OnInit {
   title = 'Client';
 
 
-  constructor(private basketService:BasketService) {}
+  constructor(private basketService:BasketService,private accountService:AccountService) {}
 
   ngOnInit(){ 
+    this.getBaasket();
+    this.getCurrentUser();
+
+  }
+  getBaasket(){
     const id= localStorage.getItem('basket_id')
     if(id) this.basketService.getBasket(id)
-
+  }
+  getCurrentUser(){
+    let token = localStorage.getItem('token');
+    if(token)  this.accountService.loadCurrentUser(token).subscribe();
   }
 }

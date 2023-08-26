@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { User } from 'src/app/shared/models/user';
 import { AccountService } from '../account.service';
+import { Observable, map, of} from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(){
     this.loginForm = this.builder.group({
-      email:['',[Validators.required,Validators.email],[this.checkIfEmailExists.bind(this)]],
+      email:['',[Validators.required,Validators.email]],
       password:['',[Validators.required]]
     })
   }
@@ -24,21 +25,23 @@ export class LoginComponent implements OnInit {
       "email":this.loginForm.get('email')?.value,
       "password":this.loginForm.get('password')?.value
     }
+    console.log(this.loginForm)
     this.accountService.login(user).subscribe(x =>{
       console.log(x);
     })
   }
-  checkIfEmailExists(control:FormControl){
+  checkIfEmailExists(){
+   const obs = new Promise((resolve,reject)=>{
     this.accountService.checkIfEmailExists(this.loginForm.get('email')?.value).subscribe(x =>{
-      if(x == true){
-        alert('emailExists')
-        return {'emailExists':true};
-
-      }
-      else{
-        return null;
+      if(x){
+        resolve({'emailExists':true})
+      }else{
+        resolve(null)
       }
     })
+
+   })
+   return obs;
   }
 
 }

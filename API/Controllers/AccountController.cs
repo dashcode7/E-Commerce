@@ -69,7 +69,7 @@ namespace API.Controllers
             var user =await userManager.FindByEmailAsync(loginmodel.Email);
             if (user == null) return StatusCode(401, "UnAuthorized");
             var result = signInManager.CheckPasswordSignInAsync(user, loginmodel.Password, false);
-            if(!result.IsCompletedSuccessfully) return StatusCode(401, "UnAuthorized");
+            if(!result.Result.Succeeded) return StatusCode(401, "UnAuthorized");
             return new UserModel
             {
                 Email = user.Email,
@@ -90,7 +90,7 @@ namespace API.Controllers
                 UserName = registermodel.UserName
             };
             var result = userManager.CreateAsync(appUser, registermodel.Passsword);
-            if (!result.IsCompletedSuccessfully) return BadRequest("You have made a bad request!");
+            if (!result.Result.Succeeded) return BadRequest("You have made a bad request!");
             return new UserModel
             {
                 DisplayName = registermodel.DisplayName,

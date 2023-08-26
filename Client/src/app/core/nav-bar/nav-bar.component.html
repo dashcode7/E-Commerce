@@ -26,8 +26,13 @@
             <span class="fa fa-shopping-cart fa-2x text-dark"></span>
             <div *ngIf="(basket | async) as baskets" class="cart-no">{{getCount(baskets.items)}}</div>
         </a>
+        <ng-container *ngIf="(user |async) === null">
         <button routerLink="/account/login" class="btn btn-outline-secondary me-3">Login</button>
         <button routerLink="/account/register" class="btn btn-outline-secondary m3-3">SignUp</button>
+    </ng-container>
+    <ng-container *ngIf="(user |async) as user">
+        Welcome {{user?.displayName}}
+    </ng-container>
 
     </div>
 </nav>
