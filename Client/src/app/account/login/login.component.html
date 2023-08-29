@@ -4,19 +4,30 @@
             <h3>Login</h3>
         </div>
         <form [formGroup]="loginForm">
-            {{loginForm.get('email')?.errors?.['emailExists']}}
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" formControlName="email" id="floatingInput" placeholder="Email">
+                <input type="email" [ngClass]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid ? 'is-invalid':''" class="form-control" formControlName="email" id="floatingInput" placeholder="Email">
                 <label for="floatingInput">Email address</label>
-              </div>
-              <div class="form-floating">
-                <input type="password" class="form-control" formControlName="password" id="floatingPassword" placeholder="Password">
+                <div class="invalid-feedback" *ngIf="loginForm.get('email')?.errors && loginForm.get('email')?.touched">
+                   <span *ngIf="loginForm.get('email')?.errors?.['required']">Email id is required</span>
+                   <span *ngIf="loginForm.get('email')?.errors?.['email']">Enter a valid Email Id</span>
+                </div>
+            </div>
+            <div class="form-floating">
+
+                <input type="password"
+                [ngClass]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid ? 'is-invalid':''"
+                class="form-control" formControlName="password" id="floatingPassword"
+                    placeholder="Password">
                 <label for="floatingPassword">Password</label>
-              </div>
-              
+                <div class="invalid-feedback" *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.touched">
+                    <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</span>
+                    <!-- <span *ngIf="loginForm.get('password')?.errors?.['pattern']">Password must have atleast on uppercase,lowercase characters and atleast on number and alphanumeric character</span> -->
+                 </div>
+            </div>
+        
         </form>
         <div class="d-grid mt-4">
-            <button class="btn btn-lg btn-primary" (click)="signIn()">Sign In</button>
+            <button [disabled]="loginForm.invalid" class="btn btn-lg btn-primary" (click)="signIn()">Sign In</button>
         </div>
     </div>
 </div>

@@ -3,6 +3,7 @@ import { AbstractControl, AsyncValidatorFn, FormBuilder, FormControl, FormGroup,
 import { User } from 'src/app/shared/models/user';
 import { AccountService } from '../account.service';
 import { Observable, map, of} from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ import { Observable, map, of} from 'rxjs';
 export class LoginComponent implements OnInit {
   loginForm!:FormGroup;
 
-  constructor(private builder:FormBuilder,private accountService:AccountService){}
+  constructor(private builder:FormBuilder,private accountService:AccountService,private router:Router){}
 
   ngOnInit(){
     this.loginForm = this.builder.group({
@@ -27,21 +28,10 @@ export class LoginComponent implements OnInit {
     }
     console.log(this.loginForm)
     this.accountService.login(user).subscribe(x =>{
+      this.router.navigate(['/shop']);
       console.log(x);
     })
   }
-  checkIfEmailExists(){
-   const obs = new Promise((resolve,reject)=>{
-    this.accountService.checkIfEmailExists(this.loginForm.get('email')?.value).subscribe(x =>{
-      if(x){
-        resolve({'emailExists':true})
-      }else{
-        resolve(null)
-      }
-    })
-
-   })
-   return obs;
-  }
+ 
 
 }

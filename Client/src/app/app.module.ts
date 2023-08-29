@@ -7,6 +7,7 @@ import { CoreModule } from './core/core.module';
 import { HomeModule } from './home/home.module';
 import { ErrorInterceptor } from './core/error/error.interceptor';
 import { LoaderInterceptorInterceptor } from './core/loader-interceptor/loader-interceptor.interceptor';
+import { AuthInterceptor } from './core/auth-interceptor/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { LoaderInterceptorInterceptor } from './core/loader-interceptor/loader-i
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true},
-    {provide:HTTP_INTERCEPTORS,useClass:LoaderInterceptorInterceptor,multi:true}
+    {provide:HTTP_INTERCEPTORS,useClass:LoaderInterceptorInterceptor,multi:true},
+    {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}
   ],
   bootstrap: [AppComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]

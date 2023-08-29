@@ -31,7 +31,14 @@
         <button routerLink="/account/register" class="btn btn-outline-secondary m3-3">SignUp</button>
     </ng-container>
     <ng-container *ngIf="(user |async) as user">
-        Welcome {{user?.displayName}}
+        <div class="dropdown">
+            <button class="btn btn-outline-dark dropdown-toggle" id="useraction" type="button" data-bs-target="#useraction" aria-controls="useraction" data-bs-toggle="dropdown">Welcome {{user.displayName}}</button>
+            <div class="dropdown-menu" aria-labelledby="useraction" id="useraction">
+                <a class="dropdown-item" routerLink="/basket"> <span><i class="fa fa-shopping-cart fa-1x"></i></span> Orders</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" (click)="onLogout()"><span><i class="fa fa-sign-out fa-1x"></i></span> Logout</a>
+            </div>
+        </div>
     </ng-container>
 
     </div>

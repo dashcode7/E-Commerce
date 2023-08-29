@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AccountService } from 'src/app/account/account.service';
 import { BasketService } from 'src/app/basket/basket.service';
@@ -22,5 +23,7 @@ export class NavBarComponent implements OnInit {
   getCount(item:BasketItem[]){
       return item.reduce((sum,val) =>sum+val.quantity,0) 
   }
-
+  onLogout(){
+    this.accountService.logout();
+  }
 }

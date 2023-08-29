@@ -1,1 +1,41 @@
-<p>register works!</p>
+<div class="d-flex justify-content-center mt-4">
+    <div class="col-3">
+        <div class="text-center mb-3">
+            <h3>Sign Up</h3>
+        </div>
+        <form [formGroup]="registerForm">
+            <div class="form-floating mb-3">
+                <input type="email" [ngClass]="registerForm.get('email')?.touched && registerForm.get('email')?.invalid ? 'is-invalid':''" class="form-control" formControlName="email" id="floatingInput" placeholder="Email">
+                <label for="floatingInput">Email address</label>
+                <div class="invalid-feedback" *ngIf="registerForm.get('email')?.errors && registerForm.get('email')?.touched">
+                   <span *ngIf="registerForm.get('email')?.errors?.['required']">Email id is required</span>
+                   <span *ngIf="registerForm.get('email')?.errors?.['email']">Enter a valid Email Id</span>
+                   <span *ngIf="registerForm.get('email')?.errors?.['emailExists']">Email Id already exists</span>
+                </div>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" [ngClass]="registerForm.get('displayName')?.touched && registerForm.get('displayName')?.invalid ? 'is-invalid':''" class="form-control" formControlName="displayName" id="floatingInput" placeholder="Email">
+                <label for="floatingInput">Display Name</label>
+                <div class="invalid-feedback" *ngIf="registerForm.get('displayName')?.errors && registerForm.get('displayName')?.touched">
+                   <span *ngIf="registerForm.get('displayName')?.errors?.['required']">Username is required</span>
+                </div>
+            </div>
+            <div class="form-floating">
+
+                <input type="password"
+                [ngClass]="registerForm.get('password')?.touched && registerForm.get('password')?.invalid ? 'is-invalid':''"
+                class="form-control" formControlName="password" id="floatingPassword"
+                    placeholder="Password">
+                <label for="floatingPassword">Password</label>
+                <div class="invalid-feedback" *ngIf="registerForm.get('password')?.errors && registerForm.get('password')?.touched">
+                    <span *ngIf="registerForm.get('password')?.errors?.['required']">Password is required</span>
+                    <span *ngIf="registerForm.get('password')?.errors?.['pattern']">Password must have atleast on uppercase,lowercase characters and atleast on number and alphanumeric character</span>
+                 </div>
+            </div>
+        
+        </form>
+        <div class="d-grid mt-4">
+            <button [disabled]="registerForm.invalid" class="btn btn-lg btn-primary" (click)="signUp()">Sign Up</button>
+        </div>
+    </div>
+</div>
