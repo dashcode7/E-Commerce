@@ -3,7 +3,7 @@ import { AbstractControl, AsyncValidatorFn, FormBuilder, FormControl, FormGroup,
 import { User } from 'src/app/shared/models/user';
 import { AccountService } from '../account.service';
 import { Observable, map, of} from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +12,10 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginForm!:FormGroup;
-
-  constructor(private builder:FormBuilder,private accountService:AccountService,private router:Router){}
+ returnUrl!:string;
+  constructor(private builder:FormBuilder,private accountService:AccountService,private router:Router,private activatedRoute:ActivatedRoute){
+    this.returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/shop'
+  }
 
   ngOnInit(){
     this.loginForm = this.builder.group({
@@ -28,7 +30,7 @@ export class LoginComponent implements OnInit {
     }
     console.log(this.loginForm)
     this.accountService.login(user).subscribe(x =>{
-      this.router.navigate(['/shop']);
+      this.router.navigate([this.returnUrl]);
       console.log(x);
     })
   }

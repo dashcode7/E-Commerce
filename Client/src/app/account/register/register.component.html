@@ -5,8 +5,10 @@
         </div>
         <form [formGroup]="registerForm">
             <div class="form-floating mb-3">
-                <input type="email" [ngClass]="registerForm.get('email')?.touched && registerForm.get('email')?.invalid ? 'is-invalid':''" class="form-control" formControlName="email" id="floatingInput" placeholder="Email">
+                <input type="email" [class.is-valid]="registerForm.get('email')?.valid"
+                 [ngClass]="registerForm.get('email')?.touched && registerForm.get('email')?.invalid ? 'is-invalid':''" class="form-control" formControlName="email" id="floatingInput" placeholder="Email">
                 <label for="floatingInput">Email address</label>
+                <div *ngIf="registerForm.get('email')?.status === 'PENDING'" class="fa fa-spinner fa-spin loader"></div>
                 <div class="invalid-feedback" *ngIf="registerForm.get('email')?.errors && registerForm.get('email')?.touched">
                    <span *ngIf="registerForm.get('email')?.errors?.['required']">Email id is required</span>
                    <span *ngIf="registerForm.get('email')?.errors?.['email']">Enter a valid Email Id</span>
